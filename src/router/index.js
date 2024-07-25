@@ -38,7 +38,7 @@ const routes = [
     component: Start,
   },
   {
-    path: "/profile/:userId",
+    path: "/profile/:id",
     name: "profile",
     component: Profile,
     props: true,

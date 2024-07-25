@@ -28,6 +28,7 @@ const getAllPosts = async () => {
 //Get user by  user id.
 const getUserById = async (id) => {
   const [rows] = await pool.query("SELECT * FROM users WHERE id = ?", [id]);
+  console.log(rows);
   return rows[0];
 };
 

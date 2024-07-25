@@ -83,9 +83,11 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/user/:id", async (req, res) => {
+  console.log("Getting user by id", req.userId);
   try {
-    const id = req.params.id;
-    const user = await getUserById(id);
+    console.log("id: ", req.userId);
+    const user = await getUserById(req.userId);
+    console.log(user);
     res.status(200).send(user);
   } catch (err) {
     console.log("Error getting user: ", err);
@@ -135,7 +137,6 @@ app.listen(3156, () => {
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
-  console.log("dsadsa", authHeader);
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) {
     return res.status(401).send("No token provided");

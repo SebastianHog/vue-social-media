@@ -6,6 +6,9 @@
     <router-link to="/register" class="border-2 border-black rounded-md p-2"
       >register</router-link
     >
+    <button class="border-2 border-black rounded-md p-2" @click="logOut">
+      Log out
+    </button>
   </div>
   <div class="grid grid-cols-2">
     <div class="flex items-center justify-center h-16">
@@ -38,6 +41,10 @@ export default {
   methods: {
     clearUsers() {
       axios.delete("/clearUsers");
+    },
+
+    logOut() {
+      localStorage.clear("accessToken");
     },
   },
   data() {
