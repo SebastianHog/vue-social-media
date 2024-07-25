@@ -83,11 +83,9 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/user/:id", async (req, res) => {
-  console.log("Getting user by id", req.userId);
   try {
-    console.log("id: ", req.userId);
-    const user = await getUserById(req.userId);
-    console.log(user);
+    const userPageId = req.params.id;
+    const user = await getUserById(userPageId);
     res.status(200).send(user);
   } catch (err) {
     console.log("Error getting user: ", err);

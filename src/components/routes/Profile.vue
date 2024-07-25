@@ -9,7 +9,7 @@ import axios from "axios";
 import getCurrentUserId from "@/utils/getCurrentUserId";
 
 export default {
-  props: ["userId"],
+  props: ["id"],
   data() {
     return {
       profileData: {},
@@ -19,12 +19,13 @@ export default {
 
   async mounted() {
     const token = localStorage.getItem("accessToken");
-    // const id = await getCurrentUserId(token);
-    // const headers = {
-    //   Authorization: `Bearer ${token}`,
-    // };
+    console.log("mounted:", this.id);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     //MAKE IT SO THAT THIS SHOWS THE ID THAT IS IN THE URL
-    const resp = await axios.get(`/user/${id}`, { headers });
+    const resp = await axios.get(`/user/${this.id}`, { headers });
+    console.log(resp);
     this.profileData = resp.data;
     console.log(this.profileData);
   },
