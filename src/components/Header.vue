@@ -9,7 +9,7 @@
       <router-link to="/trending">trending</router-link>
       <router-link to="/discover">discover</router-link>
     </div>
-    <ProfileIcon :iconSize="56" :iconType="image" />
+    <ProfileIcon :iconSize="56" :linkTo="'me'" />
   </div>
 </template>
 

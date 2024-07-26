@@ -4,7 +4,7 @@
   >
     <div class="flex items-center gap-2">
       <ProfileIcon :iconSize="42" />
-      <!-- <h1 class="text-2xl">{{ postAuthor }}</h1> -->
+      <h1 class="text-2xl">{{ postAuthor }}</h1>
       <div class="flex flex-col">
         <div class="px-1 leading-3 font-thin flex gap-2">
           <router-link
@@ -32,10 +32,31 @@
 </template>
 
 <script>
+import axios from "axios";
 import ProfileIcon from "./ProfileIcon.vue";
 
 export default {
   components: { ProfileIcon },
-  props: ["postTitle", "postText", "postMedia", "postTags", "postType"],
+  data() {
+    return {
+      postAuthor: null,
+    };
+  },
+  props: [
+    "postTitle",
+    "postText",
+    "postMedia",
+    "postTags",
+    "postType",
+    "postAuthorId",
+  ],
+  async mounted() {
+    const postAuthorData = await axios.get(`/user/${this.postAuthorId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    this.postAuthor = postAuthorData.username;
+  },
 };
 </script>

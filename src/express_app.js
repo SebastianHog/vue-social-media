@@ -3,11 +3,15 @@ const bcrypt = require("bcrypt");
 const app = express();
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const cors = require("cors");
+const getCurrentUserId = require("./utils/getCurrentUserId.js");
 
 dotenv.config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 
 const {
   getAllUsers,
@@ -85,6 +89,12 @@ app.get("/users", async (req, res) => {
 app.get("/user/:id", async (req, res) => {
   try {
     const userPageId = req.params.id;
+
+    if (userPageId === "me") {
+      const user = await getUserById(req.userId);
+      return res.status(200).send(user);
+    }
+
     const user = await getUserById(userPageId);
     res.status(200).send(user);
   } catch (err) {

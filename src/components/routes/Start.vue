@@ -11,6 +11,7 @@
         :postText="post.content"
         :postMedia="post.media_url"
         :postType="post.media_type"
+        :postAuthorId="post.author_id"
       />
     </div>
   </div>
@@ -32,16 +33,16 @@ export default {
     };
   },
   methods: {
-    async newTextpost(text) {
+    async newTextpost(text, authorId) {
       const newPost = {
-        author_id: 1, // This should be dynamic, typically from the logged-in user context
+        author_id: authorId, // This should be dynamic, typically from the logged-in user context
         text: text,
       };
       await this.sendPostToDB(newPost.author_id, text);
     },
-    async newImagePost(text, image) {
+    async newImagePost(text, image, authorId) {
       const newPost = {
-        author_id: 1, // This should be dynamic
+        author_id: authorId, // This should be dynamic
         text: text,
         media_type: "image",
         media_url: image,
@@ -53,9 +54,9 @@ export default {
         image
       );
     },
-    async newVideoPost(text, video) {
+    async newVideoPost(text, video, authorId) {
       const newPost = {
-        author_id: 1, // This should be dynamic
+        author_id: authorId, // This should be dynamic
         text: text,
         media_type: "video",
         media_url: video,

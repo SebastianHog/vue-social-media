@@ -1,7 +1,6 @@
 <template>
   <router-link
-    to="/profile/1"
-    href="#"
+    :to="'/profile/' + linkTo"
     class="rounded-full border-4 border-green-500"
     :style="{ width: iconSize + 'px', height: iconSize + 'px' }"
   >
@@ -15,6 +14,6 @@
 
 <script>
 export default {
-  props: ["iconSize"],
+  props: ["iconSize", "linkTo"],
 };
 </script>

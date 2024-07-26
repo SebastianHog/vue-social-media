@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import getCurrentUserId from "../utils/getCurrentUserId.js";
 
 export default {
@@ -68,7 +69,8 @@ export default {
       postText: "",
       postFileUrl: null,
       originalFile: "",
-      authorId: null,
+      authorId: 0,
+      authorName: "default author",
     };
   },
   methods: {
@@ -93,7 +95,7 @@ export default {
             this.postText,
             this.postFileUrl,
             "video",
-            this.authorId
+            this.authorName
           );
           break;
         case "image/jpeg":
@@ -103,11 +105,11 @@ export default {
             this.postText,
             this.postFileUrl,
             "image",
-            this.authorId
+            this.authorName
           );
           break;
         default:
-          this.$emit("submitTextPost", this.postText, this.authorId);
+          this.$emit("submitTextPost", this.postText, this.authorName);
           break;
       }
       this.resetForm();
@@ -118,8 +120,21 @@ export default {
       this.postFileUrl = null;
     },
   },
-  mounted() {
-    const currentUserId = getCurrentUserId(localStorage.getItem("accessToken"));
+  async mounted() {
+    const currentUserId = await getCurrentUserId(
+      localStorage.getItem("accessToken")
+    );
+    console.log("CreatePost.vue, Current userID", currentUserId);
+
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const resp = await axios
+      .get(`/user/${currentUserId}`, { headers })
+      .then((q) => q.data);
+
+    this.authorName = resp.username;
     this.authorId = currentUserId;
   },
 };

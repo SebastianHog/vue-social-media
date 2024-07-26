@@ -14,4 +14,4 @@ function getCurrentUserId(token) {
   return JSON.parse(jsonPayload).userId;
 }
 
-export default getCurrentUserId;
+module.exports = getCurrentUserId;

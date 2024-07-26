@@ -6,7 +6,6 @@
 
 <script>
 import axios from "axios";
-import getCurrentUserId from "@/utils/getCurrentUserId";
 
 export default {
   props: ["id"],
@@ -19,11 +18,9 @@ export default {
 
   async mounted() {
     const token = localStorage.getItem("accessToken");
-    console.log("mounted:", this.id);
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    //MAKE IT SO THAT THIS SHOWS THE ID THAT IS IN THE URL
     const resp = await axios.get(`/user/${this.id}`, { headers });
     console.log(resp);
     this.profileData = resp.data;
